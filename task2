@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список студентів</title>
+</head>
+<body>
+    <h2>Список студентів та їх результати</h2>
+    
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Ім'я</th>
+                <th>Оцінки</th>
+                <th>Середня оцінка</th>
+                <th>Результат</th>
+            </tr>
+        </thead>
+        <tbody id="studentTable">
+        </tbody>
+    </table>
+
+    <script>
+        function checkPassing(name, ...grades) {
+            const average = grades.reduce((sum, grade) => sum + grade, 0) / grades.length;
+
+            const result = average >= 60 ? 'Пройшов' : 'Не пройшов';
+
+            return { name, grades, average, result };
+        }
+
+        const students = [
+            checkPassing('Олександр', 75, 80, 92),
+            checkPassing('Марія', 55, 60, 58),
+            checkPassing('Іван', 90, 85, 78),
+            checkPassing('Ольга', 45, 50, 52),
+        ];
+
+        const tableBody = document.getElementById('studentTable');
+
+        students.forEach(student => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${student.name}</td>
+                <td>${student.grades.join(', ')}</td>
+                <td>${student.average.toFixed(2)}</td>
+                <td>${student.result}</td>
+            `;
+
+            tableBody.appendChild(row);
+        });
+    </script>
+</body>
+</html>
